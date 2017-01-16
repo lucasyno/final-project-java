@@ -26,28 +26,6 @@ public class App
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-    	try {
-			Connection connection = DriverManager.getConnection(""
-					+ "jdbc:hsqldb:hsql://localhost/workdb");
-			
-			IRepositoryCatalog catalogOf = new RepositoryCatalog(connection);
-			Person user = catalogOf.people().get(1);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	try {
-			Connection connection = DriverManager.getConnection(""
-					+ "jdbc:hsqldb:hsql://localhost/workdb");
-			
-			IRepositoryCatalog catalogOf = new RepositoryCatalog(connection);
-			Person user = catalogOf.people().get(1);
-			catalogOf.people().delete(user);
-			catalogOf.saveAndClose();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
     	
     	try {
 			Connection connection = DriverManager.getConnection(""

@@ -30,16 +30,27 @@ public class RoleRepositoryCRUDTest {
 		IRepositoryCatalog catalogOf = getRepository();
 		Role role = catalogOf.role().get(0);
 		catalogOf.saveAndClose();
+		
+		assertEquals("admin", role.getRoleName());
 	}
 
 	@Test
 	public void testUpdate() throws SQLException {
 		Role savedRole = createRole();
 		IRepositoryCatalog catalogOf = getRepository();
-		Role user = catalogOf.role().get(savedRole.getId());
-		user.setRoleName("gosc");
-		catalogOf.role().update(user);
+		Role role = catalogOf.role().get(savedRole.getId());
+		
+		assertEquals("admin", role.getRoleName());
+		
+		role.setRoleName("gosc");
+		catalogOf.role().update(role);
 		catalogOf.saveAndClose();
+		
+		IRepositoryCatalog catalogOf2 = getRepository();
+		Role role2 = catalogOf2.role().get(role.getId());
+		catalogOf2.saveAndClose();
+		
+		assertEquals("gosc", role2.getRoleName());
 	}
 	
 	@Test

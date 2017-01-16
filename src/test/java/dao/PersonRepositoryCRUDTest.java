@@ -30,6 +30,9 @@ public class PersonRepositoryCRUDTest {
 		IRepositoryCatalog catalogOf = getRepository();
 		Person user = catalogOf.people().get(0);
 		catalogOf.saveAndClose();
+		
+		assertEquals("aaa", user.getLogin());
+		assertEquals("bbb", user.getPassword());
 	}
 
 	@Test
@@ -37,10 +40,21 @@ public class PersonRepositoryCRUDTest {
 		Person savedUser = createPerson();
 		IRepositoryCatalog catalogOf = getRepository();
 		Person user = catalogOf.people().get(savedUser.getId());
+		
+		assertEquals("aaa", user.getLogin());
+		assertEquals("bbb", user.getPassword());
+		
 		user.setLogin("ccc");
 		user.setPassword("tajne_haslo");
 		catalogOf.people().update(user);
 		catalogOf.saveAndClose();
+		
+		IRepositoryCatalog catalogOf2 = getRepository();
+		Person user2 = catalogOf2.people().get(user.getId());
+		catalogOf2.saveAndClose();
+		
+		assertEquals("ccc", user2.getLogin());
+		assertEquals("tajne_haslo", user2.getPassword());
 	}
 	
 	@Test
@@ -49,7 +63,7 @@ public class PersonRepositoryCRUDTest {
 		IRepositoryCatalog catalogOf = getRepository();
 		Person user = catalogOf.people().get(savedUser.getId());
 		catalogOf.people().delete(user);
-		catalogOf.saveAndClose();
+		catalogOf.saveAndClose();	
 	}
 	
 	// helper function to create person

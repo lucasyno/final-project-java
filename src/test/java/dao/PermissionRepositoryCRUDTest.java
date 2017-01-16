@@ -30,6 +30,8 @@ public class PermissionRepositoryCRUDTest {
 		IRepositoryCatalog catalogOf = getRepository();
 		Permission perm = catalogOf.permission().get(0);
 		catalogOf.saveAndClose();
+		
+		assertEquals("edycja", perm.getName());
 	}
 
 	@Test
@@ -37,9 +39,18 @@ public class PermissionRepositoryCRUDTest {
 		Permission savedperm = createPermission();
 		IRepositoryCatalog catalogOf = getRepository();
 		Permission perm = catalogOf.permission().get(savedperm.getId());
-		perm.setName("edycja");
+		
+		assertEquals("edycja", perm.getName());
+		
+		perm.setName("usuwanie");
 		catalogOf.permission().update(perm);
 		catalogOf.saveAndClose();
+		
+		IRepositoryCatalog catalogOf2 = getRepository();
+		Permission perm2 = catalogOf2.permission().get(savedperm.getId());
+		catalogOf2.saveAndClose();
+		
+		assertEquals("usuwanie", perm2.getName());
 	}
 	
 	@Test
